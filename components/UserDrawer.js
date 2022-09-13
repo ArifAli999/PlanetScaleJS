@@ -22,6 +22,7 @@ function UserDrawer() {
 
 
     const { userProfile, addUserDets, addUser } = useAuthStore();
+
     console.log(userProfile)
     function logout() {
         addUser('')
@@ -32,7 +33,7 @@ function UserDrawer() {
 
 
     return (
-        <>
+        <div suppressHydrationWarning>
             <Text ref={btnRef} color={color} fontSize={40} p={0} onClick={onOpen} display="flex" justifyContent="center"
                 _hover={{
                     cursor: "pointer",
@@ -57,7 +58,6 @@ function UserDrawer() {
                     <Flex display="flex" alignItems="center" p={6} justifyContent="space-between">
 
 
-                        <Text size={10} fontSize='lg'>Hello {userProfile.username}</Text>
                         <ColorToggle />
 
 
@@ -79,7 +79,7 @@ function UserDrawer() {
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
-        </>
+        </div>
     )
 }
 

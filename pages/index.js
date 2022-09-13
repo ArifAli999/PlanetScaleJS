@@ -47,12 +47,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Flex p={6} alignItems="center" justifyContent="center">
-
+        <DrawerExample />
 
         <Spacer />
 
+        <UserDrawer />
 
-        {userProfile ? <UserDrawer /> : <DrawerExample />}
 
 
       </Flex>

@@ -1,11 +1,14 @@
 import { EmailIcon, LinkIcon } from "@chakra-ui/icons";
-import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, Stack, Text, Toast, useColorModeValue, useDisclosure, useToast } from "@chakra-ui/react";
+import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, FormLabel, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, Stack, Switch, Text, Toast, useColorModeValue, useDisclosure, useToast } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import config from '../dbconfig'
 import { connect } from '@planetscale/database'
-import { AiOutlineUser } from 'react-icons/ai'
+import { AiOutlineClose, AiOutlineUser } from 'react-icons/ai'
 import { Icon } from '@chakra-ui/react'
 import useAuthStore from '../store/authStore'
+import UserDrawer from "./UserDrawer";
+import ColorToggle from "./ColorToggle";
+import UserSettings from "./UserSettings";
 
 
 function DrawerExample() {
@@ -20,7 +23,7 @@ function DrawerExample() {
     const toast = useToast()
 
 
-    const { addUser, addUserDets } = useAuthStore();
+    const { addUser, addUserDets, userProfile } = useAuthStore();
 
 
 
@@ -114,65 +117,83 @@ function DrawerExample() {
 
 
     return (
-        <>
-            <Text ref={btnRef} color={color} fontSize={40} p={0} onClick={onOpen} display="flex" justifyContent="center"
-                _hover={{
-                    cursor: "pointer",
-                    color: "purple.500",
-                }}>
-
-                +
 
 
-            </Text>
-            <Drawer
-                isOpen={isOpen}
-                placement='right'
-                onClose={onClose}
-                finalFocusRef={btnRef}
-                isFullHeight={true}
-                size='sm'
-            >
+
+        <><Text ref={btnRef} color={color} fontSize={40} p={0} onClick={onOpen} display="flex" justifyContent="center"
+            _hover={{
+                cursor: "pointer",
+                color: "purple.500",
+            }}>
+
+            +
+
+
+        </Text><Drawer
+            isOpen={isOpen}
+            placement='right'
+            onClose={onClose}
+            finalFocusRef={btnRef}
+            isFullHeight={true}
+            size='sm'
+        >
                 <DrawerOverlay />
                 <DrawerContent>
 
-                    <DrawerHeader display="flex" alignItems="center" justifyContent="space-between">
-                        <Flex display="flex" alignItems="center" justifyContent="space-between">
+                    <DrawerHeader display="flex" alignItems="center" justifyContent="space-between" borderBottom='1px' borderColor='gray.500'>
 
-                            <Text>Create your account</Text>
-                            <DrawerCloseButton />
-                        </Flex>
+
+                        <Text >
+                            {userProfile ? 'Account Settings' : 'Create your account'}
+
+
+                        </Text>
+                        <Icon as={AiOutlineClose} onClick={onClose} w={6} h={6} _hover={{
+                            cursor: "pointer",
+                            color: "purple.500",
+                        }} />
+
+
                     </DrawerHeader>
 
-                    <DrawerBody p={4}>
-                        <Stack spacing={4} >
-                            <InputGroup>
-                                <InputLeftElement
-                                    pointerEvents='none'
-                                    children={<Icon as={AiOutlineUser} color={color} />}
-                                />
-                                <Input placeholder='Username ' w='full'
-                                    value={username} onChange={(event) => setUsername(event.target.value)} />
-                            </InputGroup>
+                    <DrawerBody p={0}>
+                        <Stack spacing={0} p={0}>
 
-                            <InputGroup>
-                                <InputLeftElement
-                                    pointerEvents='none'
-                                    children={<EmailIcon color={color} />}
-                                />
-                                <Input placeholder='Email ' w='full'
-                                    value={email} onChange={(event) => setEmail(event.target.value)} />
-                            </InputGroup>
+                            {userProfile ? (
+                                <>
+                                    <ColorToggle />
+                                    <UserSettings />
 
-                            {/* If you add the size prop to `InputGroup`, it'll pass it to all its children. */}
-                            <InputGroup >
-                                <InputLeftElement
-                                    pointerEvents='none'
-                                    children={<LinkIcon color={color} />}
-                                />
-                                <Input type='text' placeholder='Password '
-                                    value={password} onChange={(event) => setPassword(event.target.value)} />
-                            </InputGroup>
+
+
+                                </>
+                            ) : (<Stack spacing={4} p={4} mt={4}>
+                                <InputGroup>
+                                    <InputLeftElement
+                                        pointerEvents='none'
+                                        children={<Icon as={AiOutlineUser} color={color} />} />
+                                    <Input placeholder='Username ' w='full'
+                                        value={username} onChange={(event) => setUsername(event.target.value)} />
+                                </InputGroup>
+
+                                <InputGroup>
+                                    <InputLeftElement
+                                        pointerEvents='none'
+                                        children={<EmailIcon color={color} />} />
+                                    <Input placeholder='Email ' w='full'
+                                        value={email} onChange={(event) => setEmail(event.target.value)} />
+                                </InputGroup>
+
+                                {/* If you add the size prop to `InputGroup`, it'll pass it to all its children. */}
+                                <InputGroup>
+                                    <InputLeftElement
+                                        pointerEvents='none'
+                                        children={<LinkIcon color={color} />} />
+                                    <Input type='text' placeholder='Password '
+                                        value={password} onChange={(event) => setPassword(event.target.value)} />
+                                </InputGroup>
+                            </Stack>)}
+
                         </Stack>
                     </DrawerBody>
 
@@ -184,6 +205,7 @@ function DrawerExample() {
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
+
         </>
     )
 }
