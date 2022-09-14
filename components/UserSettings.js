@@ -103,7 +103,7 @@ function UserSettings() {
                 </FormLabel>
 
                 <ModalComp modalcont={[
-                    <FormControl ikey='userNamed' isInvalid={err} display='flex' flexDirection='column'>
+                    <FormControl key='userNamed' isInvalid={err} display='flex' flexDirection='column'>
                         <FormLabel fontSize='xs' mb='2.5'>Got something new?</FormLabel>
                         <Input type='text' placeholder={userProfile && userProfile.username}
                             value={newName} onChange={(e) => setNewName(e.target.value)} />
