@@ -1,5 +1,5 @@
 import { EmailIcon, LinkIcon } from "@chakra-ui/icons";
-import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, FormLabel, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, Stack, Switch, Text, Toast, useColorModeValue, useDisclosure, useToast } from "@chakra-ui/react";
+import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, FormLabel, IconButton, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, Stack, Switch, Text, Toast, useColorModeValue, useDisclosure, useToast } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import config from '../dbconfig'
 import { connect } from '@planetscale/database'
@@ -10,6 +10,7 @@ import UserDrawer from "./UserDrawer";
 import ColorToggle from "./ColorToggle";
 import UserSettings from "./UserSettings";
 import cuid from 'cuid';
+import { MdBuild } from "react-icons/md";
 
 
 
@@ -19,6 +20,8 @@ function DrawerExample({ open }) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = useRef()
     const color = useColorModeValue('purple.600', 'purple.300')
+    const iconcolors = useColorModeValue('gray.400', 'gray.800')
+
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -48,7 +51,6 @@ function DrawerExample({ open }) {
 
 
     }, [userProfile])
-
 
     async function saveDetails() {
 
@@ -147,111 +149,105 @@ function DrawerExample({ open }) {
 
     return (
 
-
-
         <>
-
-
-
-            <Text ref={btnRef} size='lg' color={color} p={0} onClick={onOpen}
-                w='100px'
-                _hover={{
-                    cursor: "pointer",
-                    color: "purple.500",
-                }} >
-                {auth ? <Icon w={9} h={9} as={AiOutlineUser} /> : <Icon as={AiOutlinePlus} w={9} h={9} />}
-            </Text>
-
-
-            <Drawer
-                isOpen={isOpen}
-                placement='right'
-                onClose={onClose}
-                finalFocusRef={btnRef}
-                isFullHeight={true}
-                size='sm'
-            >
-                <DrawerOverlay />
-                <DrawerContent>
-
-                    <DrawerHeader display="flex" alignItems="center" justifyContent="space-between" borderBottom='1px' borderColor='gray.500'>
-
-
-                        <Text >
-                            {auth ? 'Account Settings' : 'Create your account'}
-
-
+            {auth ? (
+                <Box borderBottom='1px' borderBottomColor='gray.400'>
+                    <Flex justifyContent='space-between' alignItems='center' p={6}>
+                        <Text>
+                            Dashboard
                         </Text>
-                        <Icon as={AiOutlineClose} onClick={onClose} w={6} h={6} _hover={{
-                            cursor: "pointer",
-                            color: "purple.500",
-                        }} />
 
 
-                    </DrawerHeader>
+                        <Stack spacing={4} direction='row'>
 
-                    <DrawerBody p={0}>
-                        <Stack spacing={0} p={0}>
+                            <IconButton
+                                bg={iconcolors}
+                                aria-label='Call Segun'
+                                borderRadius='full'
+                                ref={btnRef}
+                                onClick={onOpen}
+                                icon={<AiOutlineUser />}
+                                _hover={{
+                                    cursor: "pointer",
+                                    color: "pink.600",
+                                }}
+                            />
 
-                            {auth ? (
-                                <>
-                                    <ColorToggle />
-                                    <UserSettings />
 
+                            <IconButton
+                                bg={iconcolors}
+                                aria-label='Call Segun'
+                                borderRadius='full'
+                                icon={<AiOutlineClose />}
+                                _hover={{
+                                    cursor: "pointer",
+                                    color: "pink.600",
+                                }}
+                            />
 
-
-                                </>
-                            ) : (<Stack spacing={4} p={4} mt={4}>
-                                <InputGroup>
-                                    <InputLeftElement
-                                        pointerEvents='none'
-                                    >
-
-                                        <Icon as={AiOutlineUser} color={color} />
-                                    </InputLeftElement>
-                                    <Input placeholder='Username ' w='full'
-                                        value={username} onChange={(event) => setUsername(event.target.value)} />
-                                </InputGroup>
-
-                                <InputGroup>
-                                    <InputLeftElement
-                                        pointerEvents='none'
-                                    >
-                                        <EmailIcon color={color} />
-                                    </InputLeftElement>
-                                    <Input placeholder='Email ' w='full'
-                                        value={email} onChange={(event) => setEmail(event.target.value)} />
-                                </InputGroup>
-
-                                {/* If you add the size prop to `InputGroup`, it'll pass it to all its children. */}
-                                <InputGroup>
-                                    <InputLeftElement
-                                        pointerEvents='none'
-                                    >
-                                        <LinkIcon color={color} />
-                                    </InputLeftElement>
-                                    <Input type={show ? 'text' : 'password'} placeholder='Password '
-                                        value={password} onChange={(event) => setPassword(event.target.value)} />
-                                    <InputRightElement width='4.5rem'>
-                                        <Button h='1.75rem' size='sm' onClick={handleClick}>
-                                            {show ? 'Hide' : 'Show'}
-                                        </Button>
-                                    </InputRightElement>
-                                </InputGroup>
-                            </Stack>)}
 
                         </Stack>
-                    </DrawerBody>
-                    <DrawerFooter>
-                        <Button variant='outline' mr={3} onClick={onClose}>
-                            Cancel
-                        </Button>
-                        <Button colorScheme='purple' onClick={saveDetails}>Save</Button>
-                    </DrawerFooter>
-                </DrawerContent>
-            </Drawer>
+                    </Flex>
 
+
+
+
+
+                    <Drawer
+                        isOpen={isOpen}
+                        placement='right'
+                        onClose={onClose}
+                        finalFocusRef={btnRef}
+                        isFullHeight={true}
+                        size='sm'
+                    >
+                        <DrawerOverlay />
+                        <DrawerContent>
+
+                            <DrawerHeader display="flex" alignItems="center" justifyContent="space-between" borderBottom='1px' borderColor='gray.500'>
+
+
+                                <Text >
+                                    {auth ? 'Account Settings' : 'Create your account'}
+
+
+                                </Text>
+                                <Icon as={AiOutlineClose} onClick={onClose} w={6} h={6} _hover={{
+                                    cursor: "pointer",
+                                    color: "purple.500",
+                                }} />
+
+
+                            </DrawerHeader>
+
+                            <DrawerBody p={0}>
+                                <Stack spacing={0} p={0}>
+
+                                    {auth ? (
+                                        <>
+                                            <ColorToggle />
+                                            <UserSettings />
+
+
+
+                                        </>
+                                    ) : null}
+
+                                </Stack>
+                            </DrawerBody>
+                            <DrawerFooter>
+                                <Button variant='outline' mr={3} onClick={onClose}>
+                                    Cancel
+                                </Button>
+                                <Button colorScheme='purple' onClick={saveDetails}>Save</Button>
+                            </DrawerFooter>
+                        </DrawerContent>
+                    </Drawer>
+
+                </Box>
+            ) : null}
         </>
+
     )
 }
 
