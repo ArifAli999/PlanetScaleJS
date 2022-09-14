@@ -166,13 +166,15 @@ function RegisterComp() {
 
     return (
         <ModalComp modalcont={[
-            <FormControl display='flex' flexDirection='column'>
+            <FormControl display='flex' flexDirection='column' key='regform'>
 
                 <Stack spacing={4} p={2} mt={0}>
                     <InputGroup>
                         <InputLeftElement
                             pointerEvents='none'
-                            children={<Icon as={AiOutlineUser} color={color} />} />
+                        >
+                            <Icon as={AiOutlineUser} color={color} />
+                        </InputLeftElement>
                         <Input placeholder='Username ' w='full'
                             value={username} onChange={(event) => setUsername(event.target.value)} />
                     </InputGroup>
@@ -180,7 +182,9 @@ function RegisterComp() {
                     <InputGroup>
                         <InputLeftElement
                             pointerEvents='none'
-                            children={<EmailIcon color={color} />} />
+                        >
+                            <EmailIcon color={color} />
+                        </InputLeftElement>
                         <Input placeholder='Email ' w='full'
                             value={email} onChange={(event) => setEmail(event.target.value)} />
                     </InputGroup>
@@ -189,7 +193,9 @@ function RegisterComp() {
                     <InputGroup>
                         <InputLeftElement
                             pointerEvents='none'
-                            children={<LinkIcon color={color} />} />
+                        >
+                            <LinkIcon color={color} />
+                        </InputLeftElement>
                         <Input type={show ? 'text' : 'password'} placeholder='Password '
                             value={password} onChange={(event) => setPassword(event.target.value)} />
                         <InputRightElement width='4.5rem'>

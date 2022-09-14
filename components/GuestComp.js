@@ -83,7 +83,7 @@ function GuestComp({ auth, setAuth }) {
 
 
             <ModalComp modalcont={[
-                <FormControl display='flex' flexDirection='column'>
+                <FormControl display='flex' flexDirection='column' s='userName'>
                     <FormLabel fontSize='xs' mb='2.5'>Email</FormLabel>
                     <Input mb={4} type='text' placeholder='Email or Username'
                         value={email} onChange={(e) => setEmail(e.target.value)}
