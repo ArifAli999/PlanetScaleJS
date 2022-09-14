@@ -111,6 +111,7 @@ function UserSettings() {
                     </FormControl>
                 ]} modaltit='Edit Username' newName={newName} setNewName={setNewName} err={err} setErr={setErr} saveSettings={saveSettings}
                     buttontit='Edit'
+                    key='usernameModal'
                 />
 
 
@@ -129,7 +130,9 @@ function UserSettings() {
                             value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
 
                     </FormControl>
-                ]} modaltit='Edit Email' newName={newEmail} setNewName={setNewEmail} err={err} setErr={setErr} saveSettings={emailSettings} buttontit='Edit'
+                ]} modaltit='Edit Email'
+                    key='emailModal'
+                    newName={newEmail} setNewName={setNewEmail} err={err} setErr={setErr} saveSettings={emailSettings} buttontit='Edit'
                 />
 
 
