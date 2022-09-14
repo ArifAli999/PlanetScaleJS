@@ -1,17 +1,19 @@
 import { EmailIcon, LinkIcon } from "@chakra-ui/icons";
 import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, FormLabel, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, Stack, Switch, Text, Toast, useColorModeValue, useDisclosure, useToast } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import config from '../dbconfig'
 import { connect } from '@planetscale/database'
-import { AiOutlineClose, AiOutlineUser } from 'react-icons/ai'
+import { AiOutlineClose, AiOutlinePlus, AiOutlineUser } from 'react-icons/ai'
 import { Icon } from '@chakra-ui/react'
 import useAuthStore from '../store/authStore'
 import UserDrawer from "./UserDrawer";
 import ColorToggle from "./ColorToggle";
 import UserSettings from "./UserSettings";
+import cuid from 'cuid';
 
 
-function DrawerExample() {
+
+function DrawerExample({ open }) {
 
 
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -21,10 +23,35 @@ function DrawerExample() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const toast = useToast()
+    const [auth, setAuth] = useState()
 
 
     const { addUser, addUserDets, userProfile } = useAuthStore();
 
+
+    useEffect(() => {
+        if (open === true) {
+            onOpen()
+
+        }
+    }, [open])
+
+
+
+
+    useEffect(() => {
+        if (userProfile) {
+            setAuth(true)
+            console.log('user exists')
+        }
+
+        if (!userProfile) {
+            setAuth(false)
+        }
+
+
+
+    }, [userProfile])
 
 
     async function saveDetails() {
@@ -32,6 +59,7 @@ function DrawerExample() {
 
         validateCreds(email, password);
         onClose();
+        setAuth(true)
         setUsername('');
         setPassword('');
         setEmail('');
@@ -87,12 +115,16 @@ function DrawerExample() {
     async function addToDb() {
 
         const conn = connect(config)
-        const query = 'INSERT INTO User (`username`, `email`, `password`) VALUES (?, ?, ?)'
-        const params = [username, email, password]
+
+        const query = 'INSERT INTO User (`id`,`username`, `email`, `password`) VALUES (?, ?, ?, ?)'
+        const id = cuid()
+        const params = [id, username, email, password]
 
         const results = await conn.execute(query, params)
-        console.log(results)
-        if (results) {
+
+        const sec = await conn.execute('SELECT * from User WHERE email = ? AND password = ?', [email, password])
+        console.log(sec)
+        if (sec) {
             addUser({
                 username: username,
                 email: email,
@@ -120,23 +152,27 @@ function DrawerExample() {
 
 
 
-        <><Text ref={btnRef} color={color} fontSize={40} p={0} onClick={onOpen} display="flex" justifyContent="center"
-            _hover={{
-                cursor: "pointer",
-                color: "purple.500",
-            }}>
-
-            +
+        <>
 
 
-        </Text><Drawer
-            isOpen={isOpen}
-            placement='right'
-            onClose={onClose}
-            finalFocusRef={btnRef}
-            isFullHeight={true}
-            size='sm'
-        >
+
+            <Text ref={btnRef} size='lg' color={color} p={0} onClick={onOpen}
+                _hover={{
+                    cursor: "pointer",
+                    color: "purple.500",
+                }} >
+                {auth ? <Icon w={9} h={9} as={AiOutlineUser} /> : <Icon as={AiOutlinePlus} w={9} h={9} />}
+            </Text>
+
+
+            <Drawer
+                isOpen={isOpen}
+                placement='right'
+                onClose={onClose}
+                finalFocusRef={btnRef}
+                isFullHeight={true}
+                size='sm'
+            >
                 <DrawerOverlay />
                 <DrawerContent>
 
@@ -144,7 +180,7 @@ function DrawerExample() {
 
 
                         <Text >
-                            {userProfile ? 'Account Settings' : 'Create your account'}
+                            {auth ? 'Account Settings' : 'Create your account'}
 
 
                         </Text>
@@ -159,7 +195,7 @@ function DrawerExample() {
                     <DrawerBody p={0}>
                         <Stack spacing={0} p={0}>
 
-                            {userProfile ? (
+                            {auth ? (
                                 <>
                                     <ColorToggle />
                                     <UserSettings />

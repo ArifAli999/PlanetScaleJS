@@ -34,7 +34,7 @@ function UserDrawer() {
 
     return (
         <div suppressHydrationWarning>
-            <Text ref={btnRef} color={color} fontSize={40} p={0} onClick={onOpen} display="flex" justifyContent="center"
+            <Text ref={btnRef} color={color} fontSize={40} p={0} onClick={onOpen}
                 _hover={{
                     cursor: "pointer",
                     color: "purple.500",
