@@ -2,7 +2,7 @@ import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, 
 import React from 'react'
 import useAuthStore from '../store/authStore'
 
-function ModalComp({ modalcont, modaltit, newName, setNewName, err, setErr, saveSettings, buttontit }) {
+function ModalComp({ modalcont, modaltit, newName, setNewName, err, setErr, saveSettings, buttontit, mainActiontitle }) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const toast = useToast()
     const { userProfile, addUser } = useAuthStore()
@@ -33,7 +33,7 @@ function ModalComp({ modalcont, modaltit, newName, setNewName, err, setErr, save
                         <Button variant='ghost' mr={3} onClick={onClose}>
                             Close
                         </Button>
-                        <Button variant='solid' colorScheme='purple' onClick={executeCall}>Save</Button>
+                        <Button variant='solid' colorScheme='purple' onClick={executeCall}>{mainActiontitle ? mainActiontitle : 'Save'}</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal></>

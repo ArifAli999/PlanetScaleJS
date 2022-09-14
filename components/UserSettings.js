@@ -9,7 +9,7 @@ function UserSettings() {
     const [newName, setNewName] = useState('')
     const [newEmail, setNewEmail] = useState('')
     const [err, setErr] = useState(false)
-
+    console.log(userProfile)
 
     function saveSettings() {
 
@@ -29,7 +29,7 @@ function UserSettings() {
 
 
         addUser({
-            username: newName,
+            userName: newName,
             email: userProfile.email,
             id: userProfile.id,
         })
@@ -68,7 +68,7 @@ function UserSettings() {
         }
 
         addUser({
-            username: userProfile.userName,
+            userName: userProfile.userName,
             email: newEmail,
             id: userProfile.id,
         })
@@ -110,6 +110,7 @@ function UserSettings() {
 
                     </FormControl>
                 ]} modaltit='Edit Username' newName={newName} setNewName={setNewName} err={err} setErr={setErr} saveSettings={saveSettings}
+                    buttontit='Edit'
                 />
 
 
@@ -128,7 +129,7 @@ function UserSettings() {
                             value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
 
                     </FormControl>
-                ]} modaltit='Edit Email' newName={newEmail} setNewName={setNewEmail} err={err} setErr={setErr} saveSettings={emailSettings}
+                ]} modaltit='Edit Email' newName={newEmail} setNewName={setNewEmail} err={err} setErr={setErr} saveSettings={emailSettings} buttontit='Edit'
                 />
 
 

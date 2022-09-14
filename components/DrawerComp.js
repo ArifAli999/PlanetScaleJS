@@ -1,5 +1,5 @@
 import { EmailIcon, LinkIcon } from "@chakra-ui/icons";
-import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, FormLabel, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, Stack, Switch, Text, Toast, useColorModeValue, useDisclosure, useToast } from "@chakra-ui/react";
+import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, FormLabel, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, Stack, Switch, Text, Toast, useColorModeValue, useDisclosure, useToast } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import config from '../dbconfig'
 import { connect } from '@planetscale/database'
@@ -24,7 +24,8 @@ function DrawerExample({ open }) {
     const [password, setPassword] = useState('')
     const toast = useToast()
     const [auth, setAuth] = useState()
-
+    const [show, setShow] = useState(false)
+    const handleClick = () => setShow(!show)
 
     const { addUser, addUserDets, userProfile } = useAuthStore();
 
@@ -128,8 +129,9 @@ function DrawerExample({ open }) {
             addUser({
                 username: username,
                 email: email,
-                id: results.insertId
+                id: sec.rows.map((m) => m.id).toString()
             })
+            console.log(userProfile)
             return (
                 toast({
                     title: 'All done',
@@ -157,6 +159,7 @@ function DrawerExample({ open }) {
 
 
             <Text ref={btnRef} size='lg' color={color} p={0} onClick={onOpen}
+                w='100px'
                 _hover={{
                     cursor: "pointer",
                     color: "purple.500",
@@ -225,14 +228,18 @@ function DrawerExample({ open }) {
                                     <InputLeftElement
                                         pointerEvents='none'
                                         children={<LinkIcon color={color} />} />
-                                    <Input type='text' placeholder='Password '
+                                    <Input type={show ? 'text' : 'password'} placeholder='Password '
                                         value={password} onChange={(event) => setPassword(event.target.value)} />
+                                    <InputRightElement width='4.5rem'>
+                                        <Button h='1.75rem' size='sm' onClick={handleClick}>
+                                            {show ? 'Hide' : 'Show'}
+                                        </Button>
+                                    </InputRightElement>
                                 </InputGroup>
                             </Stack>)}
 
                         </Stack>
                     </DrawerBody>
-
                     <DrawerFooter>
                         <Button variant='outline' mr={3} onClick={onClose}>
                             Cancel
