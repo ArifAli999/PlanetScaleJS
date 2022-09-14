@@ -30,12 +30,7 @@ function DrawerExample({ open }) {
     const { addUser, addUserDets, userProfile } = useAuthStore();
 
 
-    useEffect(() => {
-        if (open === true) {
-            onOpen()
 
-        }
-    }, [open])
 
 
 
