@@ -72,7 +72,7 @@ function GuestComp({ auth, setAuth }) {
 
 
     return (
-        <Flex p={6} alignItems="" justifyContent="" direction='row' gap={10}>
+        <Flex p={6} alignItems="" justifyContent="" direction='row' gap={4}>
             <DrawerExample />
 
 

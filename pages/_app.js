@@ -1,6 +1,8 @@
 import '../styles/globals.css'
 import { configureAbly } from "@ably-labs/react-hooks";
 import { ChakraProvider } from '@chakra-ui/react'
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 
 
@@ -12,9 +14,13 @@ import { ChakraProvider } from '@chakra-ui/react'
  */
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider>
-      <Component {...pageProps} />
-    </ChakraProvider>)
+    <DndProvider backend={HTML5Backend}>
+      <ChakraProvider>
+
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </DndProvider>)
+
 }
 
 export default MyApp

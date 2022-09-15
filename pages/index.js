@@ -27,7 +27,7 @@ export default function Home() {
   const [auth, setAuth] = useState()
   const { userProfile } = useAuthStore();
   const bgcolor = useColorModeValue('gray.200', 'gray.600')
-  const seccolor = useColorModeValue('gray.400', 'gray.600')
+  const seccolor = useColorModeValue('gray.400', 'blackAlpha.500')
 
 
 

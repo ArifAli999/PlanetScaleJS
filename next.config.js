@@ -7,6 +7,6 @@ const nextConfig = {
 }
 
 module.exports = withTM({
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
 })
