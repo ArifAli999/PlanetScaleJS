@@ -1,8 +1,9 @@
-import { Box, Grid, Stack, Text, Flex, GridItem, SimpleGrid } from '@chakra-ui/react'
+import { Box, Grid, Stack, Text, Flex, GridItem, SimpleGrid, Button, IconButton } from '@chakra-ui/react'
 import React, { useRef, useState } from 'react'
 import { DndProvider, useDrag, useDrop } from 'react-dnd'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import cuid from 'cuid';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 
 const itemsFrom = [
@@ -59,18 +60,21 @@ const onDragEnd = (result, columns, setColumns) => {
                 items: destItems
             }
         })
-        console.log(columns)
+
     }
     else {
         const column = columns[source.droppableId];
         const copy = [...column.items]
         const [removed] = copy.splice(source.index, 1);
         copy.splice(destination.index, 0, removed)
+        console.log('this onne', copy)
+        console.log(column)
         setColumns({
             ...columns,
             [source.droppableId]: {
                 ...columns,
-                items: copy
+                items: copy,
+                name: column.name
             }
         })
     }
@@ -94,10 +98,11 @@ function TaskBox({ titleText }) {
         <DragDropContext
             onDragEnd={result => onDragEnd(result, columns, setColumns)}
         >
-            <SimpleGrid width='full' height='full' p={4} direction='rows' spacing={2}
+            <SimpleGrid width='full' height='full' p={4} direction='rows' spacing={6}
                 columns={{ sm: 1, md: 3 }}>
                 {Object.entries(columns).map(([columnId, column], index) => {
                     return (
+
                         <GridItem
                             rowSpan={0} colSpan={1}
                             h='full'
@@ -106,14 +111,37 @@ function TaskBox({ titleText }) {
 
 
 
-                            <Flex direction='column' width='100%' height='100%' gap={4}>
-                                <Text fontFamily='sans-serif' fontSize='sm' fontWeight='semibold' color='gray.500' display='flex' alignItems='center' gap={2} >
-                                    <Box as='button' w='12px' h='12px' bg='purple.400' borderRadius='full' p={2}></Box>
-                                    {column.name}
-                                </Text>
+                            <Flex direction='column' width='100%' height='100%' gap={2}>
+                                <Box display='flex' alignItems='center' gap={2} justifyContent='space-between' p={2}>
+                                    <Box display='flex' alignItems='center' gap={2} p={2}>
+                                        <Box as='button' w='12px' h='12px' bg='purple.400' borderRadius='full' p={2}>
+                                        </Box>
+
+                                        <Text fontFamily='sans-serif' fontSize='sm' fontWeight='semibold' color='gray.500' display='flex' alignItems='center' gap={2} >
+                                            {column.name}
+                                        </Text>
+
+
+                                    </Box>
+                                    <IconButton
+
+
+                                        borderRadius='full'
+                                        bg='gray.400'
+
+                                        icon={<AiOutlinePlus />}
+                                        _hover={{
+                                            cursor: "pointer",
+                                            color: "pink.600",
+                                        }}
+                                    />
+
+                                </Box>
+
 
                                 <Droppable droppableId={columnId} key={columnId}>
                                     {(provided, snapshot) => {
+                                        { provided.placeholder }
                                         return (
                                             <Box
                                                 w='full' p={6} borderRight={{ sm: '0px', md: '1px' }} borderRightColor={{ sm: 'transparent', md: 'gray.700' }}
@@ -132,7 +160,7 @@ function TaskBox({ titleText }) {
 
                                                 }}
                                             >
-                                                {provided.placeholder}
+
                                                 {column.items.map((item, index) => {
                                                     return (
                                                         <Draggable
