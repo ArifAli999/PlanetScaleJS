@@ -67,8 +67,7 @@ const onDragEnd = (result, columns, setColumns) => {
         const copy = [...column.items]
         const [removed] = copy.splice(source.index, 1);
         copy.splice(destination.index, 0, removed)
-        console.log('this onne', copy)
-        console.log(column)
+
         setColumns({
             ...columns,
             [source.droppableId]: {
@@ -127,12 +126,12 @@ function TaskBox({ titleText }) {
 
 
                                         borderRadius='full'
-                                        bg='gray.400'
+
 
                                         icon={<AiOutlinePlus />}
                                         _hover={{
                                             cursor: "pointer",
-                                            color: "pink.600",
+                                            color: "purple.400",
                                         }}
                                     />
 
@@ -141,27 +140,23 @@ function TaskBox({ titleText }) {
 
                                 <Droppable droppableId={columnId} key={columnId}>
                                     {(provided, snapshot) => {
-                                        { provided.placeholder }
+
                                         return (
                                             <Box
-                                                w='full' p={6} borderRight={{ sm: '0px', md: '1px' }} borderRightColor={{ sm: 'transparent', md: 'gray.700' }}
+                                                w='full' p={4} pt={0} pb={7} borderRight={{ sm: '0px', md: '1px' }} borderRightColor={{ sm: 'transparent', md: 'gray.700' }}
                                                 {...provided.droppableProps}
+                                                minHeight={{ sm: '250px' }}
+                                                borderRadius='md'
                                                 ref={provided.innerRef}
                                                 h='full'
                                                 bg={snapshot.isDraggingOver
                                                     ? "gray.500"
                                                     : "blackAlpha.500"}
-                                                style={{
 
-                                                    padding: 10,
-
-
-
-
-                                                }}
                                             >
 
-                                                {column.items.map((item, index) => {
+                                                {column && column.items.map((m) => m).length > 0 ? column.items.map((item, index) => {
+
                                                     return (
                                                         <Draggable
                                                             key={item.id}
@@ -171,34 +166,49 @@ function TaskBox({ titleText }) {
                                                             {(provided, snapshot) => {
                                                                 return (
 
+                                                                    <>
 
 
-                                                                    <Box bg={snapshot.isDragging ? "purple.300" : "gray.700"} p={4} mt={4} borderRadius='base' ref={provided.innerRef}
-                                                                        {...provided.draggableProps}
-                                                                        {...provided.dragHandleProps}
-                                                                        boxShadow='md'
-                                                                        style={{
-                                                                            userSelect: "none",
-                                                                            color: "white",
-                                                                            ...provided.draggableProps.style
-                                                                        }}>
-                                                                        <Stack spacing={2} >
-                                                                            <Text color='whitesmoke' fontSize='md' fontWeight='medium'>
-                                                                                {item.content}
-                                                                            </Text>
-                                                                            <Text color='gray.500' fontSize='sm' fontWeight='thin'>
-                                                                                4 subtasks (2 completed)
-                                                                            </Text>
-                                                                        </Stack>
-                                                                    </Box>
 
+                                                                        <Box bg={snapshot.isDragging ? "purple.300" : "gray.700"} p={4} mt={4} borderRadius='base' ref={provided.innerRef}
+                                                                            {...provided.draggableProps}
+                                                                            {...provided.dragHandleProps}
+                                                                            boxShadow='md'
+                                                                            _hover={{
+                                                                                cursor: "pointer",
+                                                                                background: "blackAlpha.300",
+                                                                                animationDuration: 3000,
 
+                                                                            }}
+                                                                            style={{
+                                                                                userSelect: "none",
+                                                                                color: "white",
+                                                                                ...provided.draggableProps.style
+                                                                            }}>
+
+                                                                            <Stack spacing={2} >
+                                                                                <Text color='whitesmoke' fontSize='md' fontWeight='medium'>
+                                                                                    {item.content}
+                                                                                </Text>
+                                                                                <Text color='gray.500' fontSize='sm' fontWeight='thin'>
+                                                                                    4 subtasks (2 completed)
+                                                                                </Text>
+                                                                            </Stack>
+                                                                        </Box>
+
+                                                                    </>
 
                                                                 );
                                                             }}
                                                         </Draggable>
                                                     );
-                                                })}
+                                                }) : (
+                                                    <Box bg='blackAlpha.200' p={4} mt={4} mb='4rem' h='full' display='flex' justifyContent='center' alignItems='center'>
+                                                        <Text color='gray.500' fontSize='xl' textTransform='uppercase' fontWeight='semibold' letterSpacing='1.22px'>Nothing here yet</Text>
+                                                    </Box>
+                                                )}
+
+
                                                 {provided.placeholder}
                                             </Box>
                                         );
@@ -209,7 +219,7 @@ function TaskBox({ titleText }) {
                     );
                 })}
             </SimpleGrid>
-        </DragDropContext>
+        </DragDropContext >
 
     )
 }
