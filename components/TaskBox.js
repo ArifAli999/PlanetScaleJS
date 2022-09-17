@@ -97,7 +97,7 @@ function TaskBox({ titleText }) {
         <DragDropContext
             onDragEnd={result => onDragEnd(result, columns, setColumns)}
         >
-            <SimpleGrid width='full' height='full' p={4} direction='rows' spacing={6}
+            <SimpleGrid width='full' height='full' p={2} direction='rows' spacing={6}
                 columns={{ sm: 1, md: 3 }}>
                 {Object.entries(columns).map(([columnId, column], index) => {
                     return (
@@ -116,12 +116,15 @@ function TaskBox({ titleText }) {
                                         <Box as='button' w='12px' h='12px' bg='purple.400' borderRadius='full' p={2}>
                                         </Box>
 
-                                        <Text fontFamily='sans-serif' fontSize='sm' fontWeight='semibold' color='gray.500' display='flex' alignItems='center' gap={2} >
+                                        <Text fontFamily='sans-serif' fontSize='base' fontWeight='semibold' color='gray.200' display='flex' alignItems='center' gap={2} >
                                             {column.name}
                                         </Text>
 
 
                                     </Box>
+
+
+
                                     <IconButton
 
 

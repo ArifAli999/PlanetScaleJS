@@ -1,39 +1,44 @@
-import { Box, Flex, FormControl, FormLabel, Grid, GridItem, Icon, IconButton, Input, SimpleGrid, Stack, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react'
+import { Box, Flex, FormControl, FormLabel, Grid, GridItem, Icon, IconButton, Input, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SimpleGrid, Stack, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import TaskBox from './TaskBox'
 import ModalComp from './ModalComp'
+import { ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons'
 
 function TabsComp() {
 
     const [board, newBoard] = useState()
     return (
-        <Tabs isLazy colorScheme='purple' pt={2} variant='soft-rounded'>
-            <TabList display='flex' justifyContent='space-between' alignItems='center' border={0} ml={2} >
+        <Box p={2}  >
+            <Box display='flex' justifyContent='space-between' alignItems='center' border={0} p={2} mr={2} ml={2} flexWrap='wrap'>
                 <Box display='flex' gap={4}>
-                    <Tab _hover={{ background: 'blackAlpha.600', color: 'white' }} color='white'>Board 1</Tab>
-                    <Tab _hover={{ background: 'blackAlpha.600', color: 'white' }} color='white'>Board 2</Tab>
-                    <Tab _hover={{ background: 'blackAlpha.600', color: 'white' }} color='white'>Board 3</Tab>
-
+                    <Text color='gray.200' fontSize='xl' fontWeight='medium'>Board 1</Text>
                 </Box>
 
-                <Box mr={2} p={2}>
-                    <ModalComp modalcont={[
-                        <FormControl key='userNamed' display='flex' flexDirection='column'>
-                            <FormLabel fontSize='xs' mb='2.5'>Got something new?</FormLabel>
+                <Box mr={0} p={0}>
+                    <Menu>
+                        <MenuButton
+                            as={IconButton}
+                            aria-label='Options'
+                            borderRadius='full'
+                            p='1.2rem'
+                            variant='outline'
+                        >Actions <ChevronDownIcon /></MenuButton>
+                        <MenuList>
+                            <MenuItem>New Task</MenuItem>
 
-
-                        </FormControl>
-                    ]} modaltit='New board' newName={board} setNewName={newBoard}
-                        buttontit='Create'
-                        key='usernameModal'
-                    />
+                            <MenuDivider />
+                            <MenuItem>Export to CSV</MenuItem>
+                            <MenuItem>Switch Boards</MenuItem>
+                            <MenuItem>Save</MenuItem>
+                        </MenuList>
+                    </Menu>
                 </Box>
-            </TabList>
+            </Box>
 
-            <TabPanels>
+            <Box>
 
-                <TabPanel p={0}>
+                <Box p={0}>
                     <Stack display={{ md: 'flex' }} justifyContent='space-between' direction='row' gap={2} >
 
 
@@ -45,13 +50,10 @@ function TabsComp() {
 
 
                     </Stack>
-                </TabPanel>
+                </Box>
 
-                <TabPanel>
-                    <p>two!</p>
-                </TabPanel>
-            </TabPanels>
-        </Tabs>
+            </Box>
+        </Box>
     )
 }
 
