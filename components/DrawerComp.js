@@ -172,7 +172,7 @@ function DrawerExample({ open }) {
                             <MenuButton border='1px' borderColor='gray.500' p={1.5} borderRadius='md'>{boards && boards.length > 0 ?
                                 boards.map((m) => (
                                     <>
-                                        {m.boardName} <ChevronDownIcon />
+                                        <Text key={m.boardID} > {m.boardName} <ChevronDownIcon /></Text>
                                     </>
                                 ))
                                 : 'Dashboard'}</MenuButton>

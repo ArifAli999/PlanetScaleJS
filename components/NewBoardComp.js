@@ -1,7 +1,7 @@
-import { Container, FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, RangeSlider, RangeSliderFilledTrack, RangeSliderThumb, RangeSliderTrack, Stack } from '@chakra-ui/react'
+import { Box, Button, Container, FormControl, FormErrorMessage, FormHelperText, FormLabel, IconButton, Input, RangeSlider, RangeSliderFilledTrack, RangeSliderThumb, RangeSliderTrack, Stack, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { TwitterPicker } from "@hello-pangea/color-picker";
-import { SketchPicker } from 'react-color';
+
 
 
 function NewBoardComp() {
@@ -56,17 +56,18 @@ function NewBoardComp() {
             </FormControl>
 
 
-            <FormControl >
+            <FormControl mb={0} >
                 <FormLabel fontSize='xs'>Board Color Theme</FormLabel>
                 <Input
                     type='email'
                     value={theme}
                     readOnly
                     borderColor={theme}
-                    onBlur={() => setPicker(false)}
+
                     onFocus={() => setPicker(true)}
                 />
-                {picker ? <TwitterPicker color={color} onChangeComplete={handleChangeComplete} /> : null}
+                {picker ? <TwitterPicker color={color} onChange={handleChangeComplete}
+                    onChangeComplete={() => setPicker(false)} /> : null}
 
 
 
@@ -74,25 +75,21 @@ function NewBoardComp() {
             </FormControl>
 
 
-            <FormControl >
-                <FormLabel fontSize='xs'>Board Deadline</FormLabel>
-                <Input
-                    type='email'
-                    value={input}
-                    onChange={handleInputChange}
-                />
-
-                <FormHelperText fontSize='xs'>
-                    Enter the email you'd like to receive the newsletter on.
-                </FormHelperText>
 
 
-            </FormControl>
 
 
-            <FormControl >
-                <FormLabel fontSize='xs'>Board Priority Level - {priority ? (
-                    priority[0]) : 'Not SET'}
+            <Box p={0} pt={4}>
+                <FormLabel fontSize='xs'
+                >
+                    <Box display='flex' alignItems='center' justifyContent='space-between' gap={4}>
+                        <Text>
+                            Board Priority Level -
+                        </Text>
+
+                        <Box px={2.5} py={1.5} borderRadius='full' bg={priority[0] > 40 ? 'red.500' : 'green.400'} mr={-2} >{priority ? (
+                            priority[0]) : 'Not SET'}</Box>
+                    </Box>
                 </FormLabel>
                 <RangeSlider defaultValue={[0, 100]} min={0} max={100} step={20} aria-label={['max']}
                     onChangeEnd={(val) => setPriority(val)}>
@@ -100,13 +97,13 @@ function NewBoardComp() {
                         <RangeSliderFilledTrack bg='purple.100' />
                     </RangeSliderTrack>
 
-                    <RangeSliderThumb boxSize={6} index={0} />
+                    <RangeSliderThumb boxSize={5} index={0} />
                 </RangeSlider>
 
 
 
 
-            </FormControl>
+            </Box>
 
         </Stack>
     )
