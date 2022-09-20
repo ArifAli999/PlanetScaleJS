@@ -1,5 +1,5 @@
-import { EmailIcon, LinkIcon } from "@chakra-ui/icons";
-import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, FormLabel, IconButton, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, Stack, Switch, Text, Toast, useColorModeValue, useDisclosure, useToast } from "@chakra-ui/react";
+import { ChevronDownIcon, EmailIcon, LinkIcon } from "@chakra-ui/icons";
+import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormControl, FormLabel, IconButton, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, Menu, MenuButton, MenuItem, MenuList, Stack, Switch, Text, Toast, useColorModeValue, useDisclosure, useToast } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import config from '../dbconfig'
 import { connect } from '@planetscale/database'
@@ -11,6 +11,8 @@ import ColorToggle from "./ColorToggle";
 import UserSettings from "./UserSettings";
 import cuid from 'cuid';
 import { MdBuild } from "react-icons/md";
+import ModalComp from "./ModalComp";
+import NewBoardComp from "./NewBoardComp";
 
 
 
@@ -28,6 +30,7 @@ function DrawerExample({ open }) {
     const toast = useToast()
     const [auth, setAuth] = useState()
     const [show, setShow] = useState(false)
+    const [boards, setBoards] = useState('')
     const handleClick = () => setShow(!show)
 
     const { addUser, addUserDets, userProfile } = useAuthStore();
@@ -42,6 +45,8 @@ function DrawerExample({ open }) {
         if (userProfile) {
             setAuth(true)
             console.log('user exists')
+            fetchData()
+            console.log(boards.length)
         }
 
         if (!userProfile) {
@@ -51,6 +56,15 @@ function DrawerExample({ open }) {
 
 
     }, [userProfile])
+
+
+    async function fetchData() {
+        const conn = connect(config)
+        const sec = await conn.execute('SELECT Boards.boardId, Boards.boardName,Boards.updatedAt from User, Boards WHERE User.id = Boards.boardAuthId AND User.id = ?', [userProfile.id])
+        return setBoards(sec.rows)
+
+
+    }
 
     async function saveDetails() {
 
@@ -121,7 +135,7 @@ function DrawerExample({ open }) {
         const results = await conn.execute(query, params)
 
         const sec = await conn.execute('SELECT * from User WHERE email = ? AND password = ?', [email, password])
-        console.log(sec)
+
         if (sec) {
             addUser({
                 username: username,
@@ -153,12 +167,50 @@ function DrawerExample({ open }) {
             {auth ? (
                 <Box borderBottom='1px' borderBottomColor='gray.400'>
                     <Flex justifyContent='space-between' alignItems='center' p={6}>
-                        <Text>
-                            Dashboard
-                        </Text>
+
+                        <Menu isLazy>
+                            <MenuButton border='1px' borderColor='gray.500' p={1.5} borderRadius='md'>{boards && boards.length > 0 ?
+                                boards.map((m) => (
+                                    <>
+                                        {m.boardName} <ChevronDownIcon />
+                                    </>
+                                ))
+                                : 'Dashboard'}</MenuButton>
+
+                            {boards && boards.length > 0 ? (
+
+                                boards.map((m) => (
+                                    <MenuList>
+                                        <MenuItem key={m.boardName}>{m.boardName}</MenuItem>
+                                    </MenuList>
+                                ))) : null}
 
 
-                        <Stack spacing={4} direction='row'>
+                        </Menu>
+
+
+
+                        <Stack spacing={4} direction='row' display='flex' alignItems='center'>
+
+
+
+                            <ModalComp modalcont={[
+
+                                <NewBoardComp />
+
+                            ]} modaltit='New Board'
+                                buttontit={[
+
+                                    <Box display='flex' alignItems='center' justifyContent='space-between' gap={2}>
+                                        <Text>Create</Text>
+                                        <Icon as={AiOutlinePlus} />
+                                    </Box>
+
+                                ]}
+                                key='NewBoard'
+                            />
+
+
 
                             <IconButton
                                 bg={iconcolors}
@@ -169,21 +221,11 @@ function DrawerExample({ open }) {
                                 icon={<AiOutlineUser />}
                                 _hover={{
                                     cursor: "pointer",
-                                    color: "pink.600",
+                                    color: "purple.400",
                                 }}
                             />
 
 
-                            <IconButton
-                                bg={iconcolors}
-                                aria-label='Call Segun'
-                                borderRadius='full'
-                                icon={<AiOutlineClose />}
-                                _hover={{
-                                    cursor: "pointer",
-                                    color: "pink.600",
-                                }}
-                            />
 
 
                         </Stack>
