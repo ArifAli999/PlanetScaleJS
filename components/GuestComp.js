@@ -105,6 +105,7 @@ function GuestComp({ auth, setAuth }) {
                 saveSettings={loginFunction}
                 mainActiontitle='Login'
                 key='loginModal'
+                ModalFooter='true'
             />
         </Flex>
     )

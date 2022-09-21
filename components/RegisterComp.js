@@ -204,6 +204,7 @@ function RegisterComp() {
             </FormControl>
         ]} modaltit='Register' buttontit='Register' mainActiontitle='Register'
             saveSettings={saveDetails}
+            ModalFooter='true'
 
         />
     )
