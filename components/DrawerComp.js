@@ -47,8 +47,7 @@ function DrawerExample({ open }) {
             setAuth(true)
             console.log('user exists')
             fetchData()
-            console.log(boards.length)
-            { console.log(boards.slice(0, 1)) }
+
         }
 
         if (!userProfile) {
@@ -63,6 +62,7 @@ function DrawerExample({ open }) {
     async function fetchData() {
         const conn = connect(config)
         const sec = await conn.execute('SELECT Boards.boardId, Boards.boardName,Boards.updatedAt from User, Boards WHERE User.id = Boards.boardAuthId AND User.id = ?', [userProfile.id])
+        console.log(sec.rows)
         return setBoards(sec.rows)
 
 

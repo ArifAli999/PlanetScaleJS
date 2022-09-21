@@ -128,7 +128,7 @@ function NewBoardComp() {
 
     return (
         <ModalComp modalcont={[
-            <Stack spacing={4} mb={4}>
+            <Stack spacing={4} mb={4} key='boardForm'>
                 <FormControl isInvalid={isError}>
                     <FormLabel fontSize='xs'>Board Name</FormLabel>
                     <Input
@@ -221,7 +221,7 @@ function NewBoardComp() {
         ]} modaltit='New Board'
             buttontit={[
 
-                <Box display='flex' alignItems='center' justifyContent='space-between' gap={2}>
+                <Box display='flex' alignItems='center' justifyContent='space-between' gap={2} key='newBoardButt'>
                     <Text>Create</Text>
                     <Icon as={AiOutlinePlus} />
                 </Box>
