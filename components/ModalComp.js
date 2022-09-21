@@ -1,8 +1,8 @@
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, useToast } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, useToast } from '@chakra-ui/react'
+import React, { useEffect } from 'react'
 import useAuthStore from '../store/authStore'
 
-function ModalComp({ modalcont, modaltit, newName, setNewName, err, setErr, saveSettings, buttontit, mainActiontitle }) {
+function ModalComp({ modalcont, modaltit, newName, setNewName, err, setErr, saveSettings, buttontit, mainActiontitle, ModalFooter }) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const toast = useToast()
     const { userProfile, addUser } = useAuthStore()
@@ -12,6 +12,13 @@ function ModalComp({ modalcont, modaltit, newName, setNewName, err, setErr, save
             onClose()
         }
     }
+
+    useEffect(() => {
+        if (ModalFooter == undefined) {
+            ModalFooter = 'true'
+        }
+    }, [ModalFooter])
+
 
 
 
@@ -30,10 +37,13 @@ function ModalComp({ modalcont, modaltit, newName, setNewName, err, setErr, save
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button variant='ghost' mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                        <Button variant='solid' colorScheme='purple' onClick={executeCall}>{mainActiontitle ? mainActiontitle : 'Save'}</Button>
+
+                        {ModalFooter == 'true' ? (<Box p={4} display='flex ' justifyContent='flex-end'>
+                            <Button variant='ghost' mr={3} onClick={onClose}>
+                                Close
+                            </Button>
+                            <Button variant='solid' colorScheme='purple' onClick={executeCall}>{mainActiontitle ? mainActiontitle : 'Save'}</Button></Box>) : null}
+
                     </ModalFooter>
                 </ModalContent>
             </Modal></>

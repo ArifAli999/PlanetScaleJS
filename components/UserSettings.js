@@ -112,6 +112,7 @@ function UserSettings() {
                 ]} modaltit='Edit Username' newName={newName} setNewName={setNewName} err={err} setErr={setErr} saveSettings={saveSettings}
                     buttontit='Edit'
                     key='usernameModal'
+                    ModalFooter='true'
                 />
 
 
@@ -133,6 +134,7 @@ function UserSettings() {
                 ]} modaltit='Edit Email'
                     key='emailModal'
                     newName={newEmail} setNewName={setNewEmail} err={err} setErr={setErr} saveSettings={emailSettings} buttontit='Edit'
+                    ModalFooter='true'
                 />
 
 

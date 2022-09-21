@@ -31,6 +31,7 @@ function DrawerExample({ open }) {
     const [auth, setAuth] = useState()
     const [show, setShow] = useState(false)
     const [boards, setBoards] = useState('')
+
     const handleClick = () => setShow(!show)
 
     const { addUser, addUserDets, userProfile } = useAuthStore();
@@ -47,6 +48,7 @@ function DrawerExample({ open }) {
             console.log('user exists')
             fetchData()
             console.log(boards.length)
+            { console.log(boards.slice(0, 1)) }
         }
 
         if (!userProfile) {
@@ -170,45 +172,29 @@ function DrawerExample({ open }) {
 
                         <Menu isLazy>
                             <MenuButton border='1px' borderColor='gray.500' p={1.5} borderRadius='md'>{boards && boards.length > 0 ?
-                                boards.map((m) => (
-                                    <>
-                                        <Text key={m.boardID} > {m.boardName} <ChevronDownIcon /></Text>
-                                    </>
+                                boards.slice(0, 1).map((m) => (
+                                    <Text key={m.boardID} > {m.boardName} <ChevronDownIcon /></Text>
                                 ))
                                 : 'Dashboard'}</MenuButton>
+                            <MenuList>
+                                {boards && boards.length > 0 ? (
 
-                            {boards && boards.length > 0 ? (
+                                    boards.slice(1).map((m) => (
 
-                                boards.map((m) => (
-                                    <MenuList>
                                         <MenuItem key={m.boardName}>{m.boardName}</MenuItem>
-                                    </MenuList>
-                                ))) : null}
 
+                                    ))) : null}
 
+                            </MenuList>
                         </Menu>
 
 
 
                         <Stack spacing={4} direction='row' display='flex' alignItems='center'>
 
+                            <NewBoardComp />
 
 
-                            <ModalComp modalcont={[
-
-                                <NewBoardComp />
-
-                            ]} modaltit='New Board'
-                                buttontit={[
-
-                                    <Box display='flex' alignItems='center' justifyContent='space-between' gap={2}>
-                                        <Text>Create</Text>
-                                        <Icon as={AiOutlinePlus} />
-                                    </Box>
-
-                                ]}
-                                key='NewBoard'
-                            />
 
 
 
