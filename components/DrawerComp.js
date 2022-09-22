@@ -167,7 +167,7 @@ function DrawerExample({ open }) {
 
         <>
             {auth ? (
-                <Box borderBottom='1px' borderBottomColor='gray.400'>
+                <Box borderBottom='0px' borderBottomColor='gray.700' bg='blackAlpha.600' borderTopRadius={10}>
                     <Flex justifyContent='space-between' alignItems='center' p={6}>
 
                         <Menu isLazy>

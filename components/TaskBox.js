@@ -1,4 +1,4 @@
-import { Box, Grid, Stack, Text, Flex, GridItem, SimpleGrid, Button, IconButton } from '@chakra-ui/react'
+import { Box, Grid, Stack, Text, Flex, GridItem, SimpleGrid, Button, IconButton, Icon } from '@chakra-ui/react'
 import React, { useRef, useState } from 'react'
 import { DndProvider, useDrag, useDrop } from 'react-dnd'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
@@ -20,7 +20,7 @@ const columnsFrom =
     [cuid()]: {
         name: 'TODO',
         items: itemsFrom,
-        pillColor: '#fff'
+        pillColor: 'red.300'
     },
     [cuid()]: {
         name: 'DOING',
@@ -106,14 +106,15 @@ function TaskBox({ titleText }) {
                             rowSpan={0} colSpan={1}
                             h='full'
                             key={columnId}
+
                         >
 
 
 
-                            <Flex direction='column' width='100%' height='100%' gap={2}>
-                                <Box display='flex' alignItems='center' gap={2} justifyContent='space-between' p={2}>
+                            <Flex direction='column' width='100%' height='100%' gap={2} border='1px' borderRadius='md' borderTopRadius={'xl'} borderColor='gray.600' pt={2}>
+                                <Box display='flex' alignItems='center' gap={2} justifyContent='space-between' p={2} >
                                     <Box display='flex' alignItems='center' gap={2} p={2}>
-                                        <Box as='button' w='12px' h='12px' bg='purple.400' borderRadius='full' p={2}>
+                                        <Box as='button' w='12px' h='12px' bg={column.pillColor} borderRadius='full' p={2}>
                                         </Box>
 
                                         <Text fontFamily='sans-serif' fontSize='base' fontWeight='semibold' color='gray.200' display='flex' alignItems='center' gap={2} >
@@ -146,15 +147,15 @@ function TaskBox({ titleText }) {
 
                                         return (
                                             <Box
-                                                w='full' p={4} pt={0} pb={7} borderRight={{ sm: '0px', md: '1px' }} borderRightColor={{ sm: 'transparent', md: 'gray.700' }}
+                                                w='full' p={4} pt={0} pb={4}
                                                 {...provided.droppableProps}
                                                 minHeight={{ sm: '250px' }}
-                                                borderRadius='md'
+                                                borderBottomRadius='md'
                                                 ref={provided.innerRef}
                                                 h='full'
                                                 bg={snapshot.isDraggingOver
                                                     ? "gray.500"
-                                                    : "blackAlpha.500"}
+                                                    : "gray.900"}
 
                                             >
 
@@ -205,11 +206,41 @@ function TaskBox({ titleText }) {
                                                             }}
                                                         </Draggable>
                                                     );
-                                                }) : (
-                                                    <Box bg='blackAlpha.200' p={4} mt={4} mb='4rem' h='full' display='flex' justifyContent='center' alignItems='center'>
+                                                }
+
+                                                ) : (
+                                                    <Box p={4} mt={4} display='flex' justifyContent='center' alignItems='center'>
                                                         <Text color='gray.500' fontSize='xl' textTransform='uppercase' fontWeight='semibold' letterSpacing='1.22px'>Nothing here yet</Text>
                                                     </Box>
                                                 )}
+
+
+
+                                                <Box bg={"transparent"} p={2} mt={4} borderRadius='base'
+                                                    border='1px' borderColor='gray.600'
+
+                                                    boxShadow='md'
+                                                    _hover={{
+                                                        cursor: "pointer",
+                                                        background: "blackAlpha.300",
+                                                        animationDuration: 3000,
+
+                                                    }}
+                                                    style={{
+                                                        userSelect: "none",
+                                                        color: "white",
+
+                                                    }}>
+
+                                                    <Stack spacing={2} p={2}>
+                                                        <Text color='whitesmoke' fontSize='md' fontWeight='medium' display='flex' alignItems='center' justifyContent='space-between'>
+                                                            Add Task
+
+                                                            <Icon as={AiOutlinePlus} />
+                                                        </Text>
+
+                                                    </Stack>
+                                                </Box>
 
 
                                                 {provided.placeholder}
