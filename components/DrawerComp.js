@@ -45,7 +45,7 @@ function DrawerExample({ open }) {
     useEffect(() => {
         if (userProfile) {
             setAuth(true)
-            console.log('user exists')
+
             fetchData()
 
         }
@@ -144,7 +144,7 @@ function DrawerExample({ open }) {
                 email: email,
                 id: sec.rows.map((m) => m.id).toString()
             })
-            console.log(userProfile)
+
             return (
                 toast({
                     title: 'All done',

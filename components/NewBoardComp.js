@@ -68,7 +68,7 @@ function NewBoardComp() {
                 const params = [id, formDetails.boardName, userProfile.id, formDetails.boardColor, formDetails.boardDesc, formDetails.boardLevel[0]]
 
                 const results = conn.execute(query, params).then((response) => {
-                    console.log(response)
+
                     return 'success'
 
 
@@ -222,7 +222,7 @@ function NewBoardComp() {
             buttontit={[
 
                 <Box display='flex' alignItems='center' justifyContent='space-between' gap={2} key='newBoardButt'>
-                    <Text>Create</Text>
+                    <Text>NEW</Text>
                     <Icon as={AiOutlinePlus} />
                 </Box>
 

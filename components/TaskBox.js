@@ -1,9 +1,12 @@
-import { Box, Grid, Stack, Text, Flex, GridItem, SimpleGrid, Button, IconButton, Icon } from '@chakra-ui/react'
+import { Box, Grid, Stack, Text, Flex, GridItem, SimpleGrid, Button, IconButton, Icon, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, VStack } from '@chakra-ui/react'
 import React, { useRef, useState } from 'react'
 import { DndProvider, useDrag, useDrop } from 'react-dnd'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import cuid from 'cuid';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { BsThreeDots } from 'react-icons/bs';
+import MenuComponent from './MenuComponent';
+import NewTaskComp from './NewTaskComp';
 
 
 const itemsFrom = [
@@ -17,23 +20,25 @@ const itemsFrom = [
 
 const columnsFrom =
 {
-    [cuid()]: {
+    TODO: {
         name: 'TODO',
         items: itemsFrom,
         pillColor: 'red.300'
     },
-    [cuid()]: {
+    DOING: {
         name: 'DOING',
         items: [],
         pillColor: 'yellow.400'
     },
-    [cuid()]: {
+    DONE: {
         name: 'DONE',
         items: [],
         pillColor: 'purple.400'
     }
 
 }
+
+
 
 
 const onDragEnd = (result, columns, setColumns) => {
@@ -68,12 +73,14 @@ const onDragEnd = (result, columns, setColumns) => {
         const [removed] = copy.splice(source.index, 1);
         copy.splice(destination.index, 0, removed)
 
+        console.log(columns)
         setColumns({
             ...columns,
             [source.droppableId]: {
                 ...columns,
                 items: copy,
-                name: column.name
+                name: column.name,
+                pillColor: column.pillColor
             }
         })
     }
@@ -86,9 +93,23 @@ function TaskBox({ titleText }) {
 
     const [columns, setColumns] = useState(columnsFrom)
 
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const [selected, setSelected] = useState('')
 
 
+    const handleModal = () => {
 
+        onOpen()
+
+    }
+
+    function openModal(id) {
+        onOpen()
+        console.log(id)
+        setSelected(id)
+
+    }
 
 
 
@@ -118,26 +139,14 @@ function TaskBox({ titleText }) {
                                         </Box>
 
                                         <Text fontFamily='sans-serif' fontSize='base' fontWeight='semibold' color='gray.200' display='flex' alignItems='center' gap={2} >
-                                            {column.name}
+                                            {columnId}
                                         </Text>
 
 
                                     </Box>
 
 
-
-                                    <IconButton
-
-
-                                        borderRadius='full'
-
-
-                                        icon={<AiOutlinePlus />}
-                                        _hover={{
-                                            cursor: "pointer",
-                                            color: "purple.400",
-                                        }}
-                                    />
+                                    <MenuComponent />
 
                                 </Box>
 
@@ -184,20 +193,35 @@ function TaskBox({ titleText }) {
                                                                                 animationDuration: 3000,
 
                                                                             }}
+
                                                                             style={{
                                                                                 userSelect: "none",
                                                                                 color: "white",
                                                                                 ...provided.draggableProps.style
-                                                                            }}>
+                                                                            }}
+                                                                            role="group">
 
-                                                                            <Stack spacing={2} >
-                                                                                <Text color='whitesmoke' fontSize='md' fontWeight='medium'>
-                                                                                    {item.content}
-                                                                                </Text>
-                                                                                <Text color='gray.500' fontSize='sm' fontWeight='thin'>
-                                                                                    4 subtasks (2 completed)
-                                                                                </Text>
-                                                                            </Stack>
+                                                                            <Box spacing={2} display='flex' alignItems={'center'}>
+                                                                                <Box flex={1}>
+                                                                                    <Text color='whitesmoke' fontSize='md' fontWeight='medium'>
+                                                                                        {item.content}
+                                                                                    </Text>
+                                                                                    <Text color='gray.500' fontSize='sm' fontWeight='thin'>
+                                                                                        4 subtasks (2 completed)
+                                                                                    </Text>
+                                                                                </Box>
+
+                                                                                <Icon as={BsThreeDots} style={{
+                                                                                    userSelect: "none",
+                                                                                    color: "purple.500",
+
+
+                                                                                }}
+                                                                                    visibility="hidden"
+                                                                                    _groupHover={{ visibility: "visible", color: 'pink.500' }} />
+
+
+                                                                            </Box>
                                                                         </Box>
 
                                                                     </>
@@ -210,7 +234,7 @@ function TaskBox({ titleText }) {
 
                                                 ) : (
                                                     <Box p={4} mt={4} display='flex' justifyContent='center' alignItems='center'>
-                                                        <Text color='gray.500' fontSize='xl' textTransform='uppercase' fontWeight='semibold' letterSpacing='1.22px'>Nothing here yet</Text>
+                                                        <Text color='gray.500' fontSize='xl' textTransform='uppercase' fontWeight='semibold' letterSpacing='1.22px'>Nothing here ye </Text>
                                                     </Box>
                                                 )}
 
@@ -218,7 +242,7 @@ function TaskBox({ titleText }) {
 
                                                 <Box bg={"transparent"} p={2} mt={4} borderRadius='base'
                                                     border='1px' borderColor='gray.600'
-
+                                                    onClick={() => openModal(column.name)}
                                                     boxShadow='md'
                                                     _hover={{
                                                         cursor: "pointer",
@@ -240,6 +264,8 @@ function TaskBox({ titleText }) {
                                                         </Text>
 
                                                     </Stack>
+                                                    <NewTaskComp isOpen={isOpen} onOpen={onOpen} onClose={onClose} columnId={columnId} column={selected} />
+
                                                 </Box>
 
 
