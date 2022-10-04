@@ -7,31 +7,32 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { BsThreeDots } from 'react-icons/bs';
 import MenuComponent from './MenuComponent';
 import NewTaskComp from './NewTaskComp';
+import BoxModel from './BoxModel';
 
 
 const itemsFrom = [
-    { id: cuid(), content: 'First task' },
-    { id: cuid(), content: 'Second task' },
-    { id: cuid(), content: 'Fourth task' },
-    { id: cuid(), content: 'Third task' },
-    { id: cuid(), content: 'Fifth task' },
-    { id: cuid(), content: 'Sixth task' },
+    { id: cuid(), content: 'First task', description: 'This is test descp 1' },
+    { id: cuid(), content: 'Second task', description: 'This is test descp 10' },
+    { id: cuid(), content: 'Fourth task', description: 'This is test descp 2' },
+    { id: cuid(), content: 'Third task', description: 'This is test descp 3' },
+    { id: cuid(), content: 'Fifth task', description: 'This is test descp 4' },
+    { id: cuid(), content: 'Sixth task', description: 'This is test descp 5' },
 ]
 
 const columnsFrom =
 {
-    TODO: {
-        name: 'TODO',
+    Todo: {
+        name: 'Todo',
         items: itemsFrom,
         pillColor: 'red.300'
     },
-    DOING: {
-        name: 'DOING',
+    Doing: {
+        name: 'Doing',
         items: [],
         pillColor: 'yellow.400'
     },
-    DONE: {
-        name: 'DONE',
+    Done: {
+        name: 'Done',
         items: [],
         pillColor: 'purple.400'
     }
@@ -65,7 +66,6 @@ const onDragEnd = (result, columns, setColumns) => {
                 items: destItems
             }
         })
-
     }
     else {
         const column = columns[source.droppableId];
@@ -84,9 +84,6 @@ const onDragEnd = (result, columns, setColumns) => {
             }
         })
     }
-
-
-
 }
 
 function TaskBox({ titleText }) {
@@ -94,16 +91,23 @@ function TaskBox({ titleText }) {
     const [columns, setColumns] = useState(columnsFrom)
 
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const {
+        isOpen: isOpenBoxModel,
+        onOpen: onOpenBoxModel,
+        onClose: onCloseBoxModel
+    } = useDisclosure()
 
     const [selected, setSelected] = useState('')
+    const [selectedName, setSelectedName] = useState('');
+    const [selectedDesc, setSelectedDesc] = useState('');
 
 
-    const handleModal = () => {
-
-        onOpen()
-
-    }
-
+    /*    const handleModal = () => {
+   
+           onOpen()
+   
+       }
+    */
     function openModal(id) {
         onOpen()
         console.log(id)
@@ -111,6 +115,13 @@ function TaskBox({ titleText }) {
 
     }
 
+    function openBoxModal(id, name, desc) {
+        onOpenBoxModel()
+        setSelectedName(name)
+        setSelectedDesc(desc)
+        setSelected(id)
+
+    }
 
 
     return (
@@ -186,11 +197,12 @@ function TaskBox({ titleText }) {
                                                                         <Box bg={snapshot.isDragging ? "purple.300" : "gray.700"} p={4} mt={4} borderRadius='base' ref={provided.innerRef}
                                                                             {...provided.draggableProps}
                                                                             {...provided.dragHandleProps}
+                                                                            onClick={() => openBoxModal(item.content, column.name, item.description)}
                                                                             boxShadow='md'
                                                                             _hover={{
                                                                                 cursor: "pointer",
                                                                                 background: "blackAlpha.300",
-                                                                                animationDuration: 3000,
+                                                                                animationDuration: 20,
 
                                                                             }}
 
@@ -201,13 +213,15 @@ function TaskBox({ titleText }) {
                                                                             }}
                                                                             role="group">
 
-                                                                            <Box spacing={2} display='flex' alignItems={'center'}>
+                                                                            <Box spacing={2} display='flex' alignItems={'center'} >
                                                                                 <Box flex={1}>
                                                                                     <Text color='whitesmoke' fontSize='md' fontWeight='medium'>
                                                                                         {item.content}
+                                                                                        <BoxModel isOpen={isOpenBoxModel} onOpen={onOpenBoxModel} onClose={onCloseBoxModel} columnId={selectedName} content={item.content} key={item.id} selected={selected} desc={selectedDesc} />
+
                                                                                     </Text>
                                                                                     <Text color='gray.500' fontSize='sm' fontWeight='thin'>
-                                                                                        4 subtasks (2 completed)
+                                                                                        {item && item.description}
                                                                                     </Text>
                                                                                 </Box>
 

@@ -64,7 +64,7 @@ function NewTaskComp({ isOpen, onClose, onOpen, columnId, column }) {
 
 
                 <ModalFooter display='flex' justifyContent='space-between' alignItems='center'>
-                    <Text mt={2} border='1px' borderColor='gray.300' px={2} py={0.5} borderRadius='md' textTransform='unset'>Addidng to {column}</Text>
+                    <Text mt={2} border='1px' borderColor='red.300' px={2} py={0.5} borderRadius='md' textTransform='unset'> {column}</Text>
                     <Button variant='solid' colorScheme='purple'>Save</Button>
                 </ModalFooter>
             </ModalContent>
