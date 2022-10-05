@@ -167,11 +167,11 @@ function DrawerExample({ open }) {
 
         <>
             {auth ? (
-                <Box borderBottom='0px' borderBottomColor='gray.700' bg='blackAlpha.600' borderTopRadius={10}>
+                <Box borderBottom='0px' borderBottomColor={useColorModeValue('gray.300', 'gray.700')} bg={useColorModeValue('gray.200', 'gray.900')} borderTopRadius={10}>
                     <Flex justifyContent='space-between' alignItems='center' p={6}>
 
                         <Menu isLazy>
-                            <MenuButton border='1px' borderColor='gray.500' p={1.5} borderRadius='md'>{boards && boards.length > 0 ?
+                            <MenuButton border='1px' borderColor={useColorModeValue('gray.400', 'gray.600')} p={1.5} borderRadius='sm'>{boards && boards.length > 0 ?
                                 boards.slice(0, 1).map((m) => (
                                     <Text key={m.boardID} > {m.boardName} <ChevronDownIcon /></Text>
                                 ))

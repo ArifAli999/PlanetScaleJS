@@ -1,6 +1,6 @@
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { ButtonGroup, Editable, EditableInput, EditablePreview, IconButton, Input, Tooltip, useColorModeValue, useEditableControls } from "@chakra-ui/react";
-
+import { ButtonGroup, Editable, EditableInput, EditablePreview, Icon, IconButton, Input, InputGroup, InputRightAddon, InputRightElement, Tooltip, useColorModeValue, useEditableControls } from "@chakra-ui/react";
+import { AiFillAlert } from 'react-icons/ai'
 function EditableComp({ value }) {
     /* Here's a custom control */
     function EditableControls() {
@@ -29,19 +29,26 @@ function EditableComp({ value }) {
             isPreviewFocusable={true}
             selectAllOnFocus={false}
         >
-            <Tooltip label="Click to edit">
-                <EditablePreview
-                    py={2}
-                    px={4}
-                    _hover={{
-                        background: useColorModeValue("gray.800", "gray.600")
-                    }}
-                    w='full'
-                    border='1px solid '
-                    borderColor='gray.400'
-                />
-            </Tooltip>
-            <Input py={2} px={4} as={EditableInput} border='1px solid' />
+
+            <EditablePreview
+                py={2}
+                px={4}
+                _hover={{
+                    background: useColorModeValue("gray.200", "gray.600")
+                }}
+                w='full'
+                border='1px solid '
+                borderColor='gray.400'
+
+            >
+
+                <CheckIcon color='green.500' />
+
+
+            </EditablePreview>
+            <InputGroup>
+                <Input py={2} px={4} as={EditableInput} border='1px solid' />
+            </InputGroup>
             <EditableControls />
         </Editable>
     );

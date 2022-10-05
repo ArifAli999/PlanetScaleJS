@@ -1,4 +1,4 @@
-import { Box, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, useToast } from '@chakra-ui/react'
+import { Box, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useColorModeValue, useDisclosure, useToast } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import useAuthStore from '../store/authStore'
 
@@ -23,7 +23,7 @@ function ModalComp({ modalcont, modaltit, newName, setNewName, err, setErr, save
 
 
     return (
-        <><Button colorScheme='gray' size='sm' variant='outline' onClick={onOpen}>{buttontit}</Button>
+        <><Button colorScheme={useColorModeValue('pink', 'gray')} size='sm' variant={useColorModeValue('outline', 'outline')} onClick={onOpen}>{buttontit}</Button>
             <Modal isOpen={isOpen} onClose={onClose} isCentered>
                 <ModalOverlay />
                 <ModalContent>

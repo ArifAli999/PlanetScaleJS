@@ -1,4 +1,4 @@
-import { Box, Button, Container, FormControl, FormErrorMessage, FormHelperText, FormLabel, Icon, IconButton, Input, RangeSlider, RangeSliderFilledTrack, RangeSliderThumb, RangeSliderTrack, Stack, Text, useDisclosure, useToast } from '@chakra-ui/react'
+import { Box, Button, Container, FormControl, FormErrorMessage, FormHelperText, FormLabel, Icon, IconButton, Input, RangeSlider, RangeSliderFilledTrack, RangeSliderThumb, RangeSliderTrack, Stack, Text, useColorModeValue, useDisclosure, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { TwitterPicker } from "@hello-pangea/color-picker";
 import useAuthStore from '../store/authStore';

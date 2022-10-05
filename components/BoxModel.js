@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { Box, Grid, Stack, Text, Flex, GridItem, SimpleGrid, Button, IconButton, Icon, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, FormControl, FormLabel, Input, FormHelperText, FormErrorMessage, Textarea, Divider, Container, Badge } from '@chakra-ui/react'
+import { Box, Grid, Stack, Text, Flex, GridItem, SimpleGrid, Button, IconButton, Icon, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, FormControl, FormLabel, Input, FormHelperText, FormErrorMessage, Textarea, Divider, Container, Badge, useColorModeValue } from '@chakra-ui/react'
 import EditableComp from './EditableComp';
+import AccordionComp from './AccordionComp';
+import { PopComp } from './PopComp';
 
 function BoxModel({ isOpen, onClose, onOpen, columnId, content, desc, selected }) {
 
@@ -25,9 +27,9 @@ function BoxModel({ isOpen, onClose, onOpen, columnId, content, desc, selected }
                 bg='blackAlpha.400'
                 backdropFilter='hue-rotate(90deg)'
             />
-            <ModalContent>
+            <ModalContent >
                 <ModalCloseButton />
-                <ModalHeader >
+                <ModalHeader bg={useColorModeValue("blackAlpha.300", "blackAlpha.500")} >
                     <Text>{selected} &nbsp;
                         <Badge variant='subtle' colorScheme='purple'> {columnId}</Badge>
                     </Text>
@@ -36,15 +38,20 @@ function BoxModel({ isOpen, onClose, onOpen, columnId, content, desc, selected }
 
 
                 </ModalHeader>
-                <ModalBody>
+                <ModalBody w='full' p='0' >
 
 
-                    <Stack spacing={4}>
-                        <FormControl>
+                    <Stack spacing={4} w='full' p='0'>
+                        <FormControl p={4}>
                             <FormLabel fontSize={'xs'} color='gray.400'>Card Description</FormLabel>
                             <EditableComp value={desc} />
 
+
                         </FormControl>
+
+                        <Box>
+                            <PopComp text='Label Settings' />
+                        </Box>
 
 
 

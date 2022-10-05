@@ -1,4 +1,4 @@
-import { Box, Grid, Stack, Text, Flex, GridItem, SimpleGrid, Button, IconButton, Icon, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, VStack } from '@chakra-ui/react'
+import { Box, Grid, Stack, Text, Flex, GridItem, SimpleGrid, Button, IconButton, Icon, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, VStack, useColorModeValue } from '@chakra-ui/react'
 import React, { useRef, useState } from 'react'
 import { DndProvider, useDrag, useDrop } from 'react-dnd'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
@@ -143,13 +143,13 @@ function TaskBox({ titleText }) {
 
 
 
-                            <Flex direction='column' width='100%' height='100%' gap={2} border='1px' borderRadius='md' borderTopRadius={'xl'} borderColor='gray.600' pt={2}>
-                                <Box display='flex' alignItems='center' gap={2} justifyContent='space-between' p={2} >
+                            <Flex direction='column' width='100%' height='100%' gap={2} border='1px' borderRadius='md' borderTopRadius={'xl'} borderColor={useColorModeValue('gray.300', 'gray.700')} pb={0} bg={useColorModeValue('white', 'gray.900')}>
+                                <Box display='flex' alignItems='center' gap={2} justifyContent='space-between' pb={0} p={2} borderTopRadius={'lg'} bg={useColorModeValue('gray.200', 'gray.700')}>
                                     <Box display='flex' alignItems='center' gap={2} p={2}>
                                         <Box as='button' w='12px' h='12px' bg={column.pillColor} borderRadius='full' p={2}>
                                         </Box>
 
-                                        <Text fontFamily='sans-serif' fontSize='base' fontWeight='semibold' color='gray.200' display='flex' alignItems='center' gap={2} >
+                                        <Text fontFamily='sans-serif' fontSize='base' fontWeight='semibold' color={useColorModeValue('gray.700', 'gray.500')} display='flex' alignItems='center'  >
                                             {columnId}
                                         </Text>
 
@@ -175,7 +175,8 @@ function TaskBox({ titleText }) {
                                                 h='full'
                                                 bg={snapshot.isDraggingOver
                                                     ? "gray.500"
-                                                    : "gray.900"}
+                                                    : `${useColorModeValue('white', 'gray.900')}`}
+
 
                                             >
 
@@ -194,7 +195,7 @@ function TaskBox({ titleText }) {
 
 
 
-                                                                        <Box bg={snapshot.isDragging ? "purple.300" : "gray.700"} p={4} mt={4} borderRadius='base' ref={provided.innerRef}
+                                                                        <Box bg={snapshot.isDragging ? "purple.300" : `${useColorModeValue('whiteAlpha.900', 'gray.700')}`} p={4} mt={4} borderRadius='base' ref={provided.innerRef}
                                                                             {...provided.draggableProps}
                                                                             {...provided.dragHandleProps}
                                                                             onClick={() => openBoxModal(item.content, column.name, item.description)}
@@ -205,6 +206,8 @@ function TaskBox({ titleText }) {
                                                                                 animationDuration: 20,
 
                                                                             }}
+                                                                            border={useColorModeValue('1px', '0')}
+                                                                            borderColor={useColorModeValue('gray.400', 'none')}
 
                                                                             style={{
                                                                                 userSelect: "none",
@@ -215,19 +218,19 @@ function TaskBox({ titleText }) {
 
                                                                             <Box spacing={2} display='flex' alignItems={'center'} >
                                                                                 <Box flex={1}>
-                                                                                    <Text color='whitesmoke' fontSize='md' fontWeight='medium'>
+                                                                                    <Text color={useColorModeValue('gray.600', 'whitesmoke')} fontSize='md' fontWeight='medium'>
                                                                                         {item.content}
                                                                                         <BoxModel isOpen={isOpenBoxModel} onOpen={onOpenBoxModel} onClose={onCloseBoxModel} columnId={selectedName} content={item.content} key={item.id} selected={selected} desc={selectedDesc} />
 
                                                                                     </Text>
-                                                                                    <Text color='gray.500' fontSize='sm' fontWeight='thin'>
+                                                                                    <Text color={useColorModeValue('gray.900', 'gray.600')} fontSize='sm' fontWeight='light'>
                                                                                         {item && item.description}
                                                                                     </Text>
                                                                                 </Box>
 
                                                                                 <Icon as={BsThreeDots} style={{
                                                                                     userSelect: "none",
-                                                                                    color: "purple.500",
+
 
 
                                                                                 }}
@@ -254,24 +257,25 @@ function TaskBox({ titleText }) {
 
 
 
-                                                <Box bg={"transparent"} p={2} mt={4} borderRadius='base'
-                                                    border='1px' borderColor='gray.600'
+                                                <Box bg={useColorModeValue('pink.300')} p={2} mt={4} borderRadius='base'
+                                                    border='1px' borderColor={useColorModeValue('pink.300', 'gray.600')}
+
                                                     onClick={() => openModal(column.name)}
                                                     boxShadow='md'
                                                     _hover={{
                                                         cursor: "pointer",
-                                                        background: "blackAlpha.300",
+                                                        background: `${useColorModeValue('pink.500', 'gray.600')}`,
                                                         animationDuration: 3000,
 
                                                     }}
                                                     style={{
                                                         userSelect: "none",
-                                                        color: "white",
+
 
                                                     }}>
 
                                                     <Stack spacing={2} p={2}>
-                                                        <Text color='whitesmoke' fontSize='md' fontWeight='medium' display='flex' alignItems='center' justifyContent='space-between'>
+                                                        <Text color={useColorModeValue('pink.50', 'whitesmoke')} fontSize='md' fontWeight='medium' display='flex' alignItems='center' justifyContent='space-between' >
                                                             Add Task
 
                                                             <Icon as={AiOutlinePlus} />

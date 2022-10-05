@@ -1,4 +1,4 @@
-import { Box, Flex, FormControl, FormLabel, Grid, GridItem, Icon, IconButton, Input, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SimpleGrid, Stack, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react'
+import { Box, Flex, FormControl, FormLabel, Grid, GridItem, Icon, IconButton, Input, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SimpleGrid, Stack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useColorModeValue } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { AiOutlinePlus, AiOutlineStar } from 'react-icons/ai'
 import TaskBox from './TaskBox'
@@ -10,10 +10,10 @@ function TabsComp() {
 
     const [board, newBoard] = useState()
     return (
-        <Box p={2} bg='chakra-body-bg' border='1px' borderColor='gray.700' borderTop={0}>
+        <Box p={2} bg='chakra-body-bg' border='1px' borderColor={useColorModeValue('gray.300', 'gray.900')} borderTop={0}>
             <Box display='flex' justifyContent='space-between' alignItems='center' border={0} p={2} mr={2} ml={2} flexWrap='wrap'>
                 <Box display='flex' gap={4} borderBottom='0' borderColor='gray.600' px={4} py={1}>
-                    <Text color='gray.200' fontSize='xl' fontWeight='medium'>Board 1</Text>
+                    <Text color={useColorModeValue('gray.800', 'gray.200')} fontSize='xl' fontWeight='medium'>Board 1</Text>
                 </Box>
 
                 <IconButton
