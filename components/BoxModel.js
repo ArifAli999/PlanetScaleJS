@@ -29,7 +29,8 @@ function BoxModel({ isOpen, onClose, onOpen, columnId, content, desc, selected }
             />
             <ModalContent >
                 <ModalCloseButton />
-                <ModalHeader bg={useColorModeValue("blackAlpha.300", "blackAlpha.500")} >
+                <ModalHeader bg={"blackAlpha.300"}
+                    _dark={{ bg: "blackAlpha.500" }} >
                     <Text>{selected} &nbsp;
                         <Badge variant='subtle' colorScheme='purple'> {columnId}</Badge>
                     </Text>

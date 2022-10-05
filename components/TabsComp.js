@@ -10,10 +10,13 @@ function TabsComp() {
 
     const [board, newBoard] = useState()
     return (
-        <Box p={2} bg='chakra-body-bg' border='1px' borderColor={useColorModeValue('gray.300', 'gray.900')} borderTop={0}>
+        <Box p={2} bg='chakra-body-bg' border='1px' borderColor={'gray.300'} borderTop={0}
+            _dark={{ borderColor: 'gray.900' }}>
             <Box display='flex' justifyContent='space-between' alignItems='center' border={0} p={2} mr={2} ml={2} flexWrap='wrap'>
                 <Box display='flex' gap={4} borderBottom='0' borderColor='gray.600' px={4} py={1}>
-                    <Text color={useColorModeValue('gray.800', 'gray.200')} fontSize='xl' fontWeight='medium'>Board 1</Text>
+                    <Text color={'gray.800'}
+                        _dark={{ color: 'gray.200' }}
+                        fontSize='xl' fontWeight='medium'>Board 1</Text>
                 </Box>
 
                 <IconButton

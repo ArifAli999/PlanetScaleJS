@@ -23,7 +23,7 @@ function ModalComp({ modalcont, modaltit, newName, setNewName, err, setErr, save
 
 
     return (
-        <><Button colorScheme={useColorModeValue('pink', 'gray')} size='sm' variant={useColorModeValue('outline', 'outline')} onClick={onOpen}>{buttontit}</Button>
+        <><Button colorScheme={useColorModeValue('pink', 'gray')} size='sm' variant={'outline'} onClick={onOpen}>{buttontit}</Button>
             <Modal isOpen={isOpen} onClose={onClose} isCentered>
                 <ModalOverlay />
                 <ModalContent>

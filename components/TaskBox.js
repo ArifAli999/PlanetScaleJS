@@ -97,6 +97,8 @@ function TaskBox({ titleText }) {
         onClose: onCloseBoxModel
     } = useDisclosure()
 
+    const boxcolor = useColorModeValue('white', 'gray.900')
+    const pinkcolor = useColorModeValue('pink.500', 'gray.600')
     const [selected, setSelected] = useState('')
     const [selectedName, setSelectedName] = useState('');
     const [selectedDesc, setSelectedDesc] = useState('');
@@ -143,13 +145,20 @@ function TaskBox({ titleText }) {
 
 
 
-                            <Flex direction='column' width='100%' height='100%' gap={2} border='1px' borderRadius='md' borderTopRadius={'xl'} borderColor={useColorModeValue('gray.300', 'gray.700')} pb={0} bg={useColorModeValue('white', 'gray.900')}>
-                                <Box display='flex' alignItems='center' gap={2} justifyContent='space-between' pb={0} p={2} borderTopRadius={'lg'} bg={useColorModeValue('gray.200', 'gray.700')}>
+                            <Flex direction='column' width='100%' height='100%' gap={2} border='1px' borderRadius='md' borderTopRadius={'xl'}
+                                borderColor={'gray.300'} pb={0} bg={'white'}
+                                _dark={{ borderColor: "gray.700", bg: 'gray.900' }}
+                            >
+                                <Box display='flex' alignItems='center' gap={2} justifyContent='space-between' pb={0} p={2} borderTopRadius={'lg'}
+                                    bg={'gray.200'}
+                                    _dark={{ bg: 'gray.700' }}>
                                     <Box display='flex' alignItems='center' gap={2} p={2}>
                                         <Box as='button' w='12px' h='12px' bg={column.pillColor} borderRadius='full' p={2}>
                                         </Box>
 
-                                        <Text fontFamily='sans-serif' fontSize='base' fontWeight='semibold' color={useColorModeValue('gray.700', 'gray.500')} display='flex' alignItems='center'  >
+                                        <Text fontFamily='sans-serif' fontSize='base' fontWeight='semibold' color={'gray.700'}
+                                            _dark={{ color: 'gray.500' }}
+                                            display='flex' alignItems='center'  >
                                             {columnId}
                                         </Text>
 
@@ -175,7 +184,8 @@ function TaskBox({ titleText }) {
                                                 h='full'
                                                 bg={snapshot.isDraggingOver
                                                     ? "gray.500"
-                                                    : `${useColorModeValue('white', 'gray.900')}`}
+                                                    : `${boxcolor}`
+                                                }
 
 
                                             >
@@ -195,7 +205,8 @@ function TaskBox({ titleText }) {
 
 
 
-                                                                        <Box bg={snapshot.isDragging ? "purple.300" : `${useColorModeValue('whiteAlpha.900', 'gray.700')}`} p={4} mt={4} borderRadius='base' ref={provided.innerRef}
+                                                                        <Box bg={snapshot.isDragging ? "purple.300" : 'whiteAlpha.900'} p={4} mt={4} borderRadius='base' ref={provided.innerRef}
+                                                                            _dark={{ bg: snapshot.isDragging ? 'purple.300' : 'gray.700', border: 0, borderColor: 'none' }}
                                                                             {...provided.draggableProps}
                                                                             {...provided.dragHandleProps}
                                                                             onClick={() => openBoxModal(item.content, column.name, item.description)}
@@ -206,8 +217,9 @@ function TaskBox({ titleText }) {
                                                                                 animationDuration: 20,
 
                                                                             }}
-                                                                            border={useColorModeValue('1px', '0')}
-                                                                            borderColor={useColorModeValue('gray.400', 'none')}
+                                                                            border={'1px'}
+
+                                                                            borderColor={'gray.400'}
 
                                                                             style={{
                                                                                 userSelect: "none",
@@ -218,12 +230,14 @@ function TaskBox({ titleText }) {
 
                                                                             <Box spacing={2} display='flex' alignItems={'center'} >
                                                                                 <Box flex={1}>
-                                                                                    <Text color={useColorModeValue('gray.600', 'whitesmoke')} fontSize='md' fontWeight='medium'>
+                                                                                    <Text color={'gray.600'} fontSize='md' fontWeight='medium'
+                                                                                        _dark={{ color: 'whitesmoke' }}>
                                                                                         {item.content}
                                                                                         <BoxModel isOpen={isOpenBoxModel} onOpen={onOpenBoxModel} onClose={onCloseBoxModel} columnId={selectedName} content={item.content} key={item.id} selected={selected} desc={selectedDesc} />
 
                                                                                     </Text>
-                                                                                    <Text color={useColorModeValue('gray.900', 'gray.600')} fontSize='sm' fontWeight='light'>
+                                                                                    <Text color={'gray.900'} fontSize='sm' fontWeight='light'
+                                                                                        _dark={{ color: 'gray.600' }}>
                                                                                         {item && item.description}
                                                                                     </Text>
                                                                                 </Box>
@@ -257,14 +271,15 @@ function TaskBox({ titleText }) {
 
 
 
-                                                <Box bg={useColorModeValue('pink.300')} p={2} mt={4} borderRadius='base'
-                                                    border='1px' borderColor={useColorModeValue('pink.300', 'gray.600')}
+                                                <Box bg={'pink.300'} p={2} mt={4} borderRadius='base'
+                                                    _dark={{ borderColor: 'gray.600', bg: 'transparent' }}
+                                                    border='1px' borderColor={'pink.300'}
 
                                                     onClick={() => openModal(column.name)}
                                                     boxShadow='md'
                                                     _hover={{
                                                         cursor: "pointer",
-                                                        background: `${useColorModeValue('pink.500', 'gray.600')}`,
+                                                        background: `${pinkcolor}`,
                                                         animationDuration: 3000,
 
                                                     }}
@@ -275,9 +290,9 @@ function TaskBox({ titleText }) {
                                                     }}>
 
                                                     <Stack spacing={2} p={2}>
-                                                        <Text color={useColorModeValue('pink.50', 'whitesmoke')} fontSize='md' fontWeight='medium' display='flex' alignItems='center' justifyContent='space-between' >
+                                                        <Text color={'pink.50'} fontSize='md' fontWeight='medium' display='flex' alignItems='center' justifyContent='space-between'
+                                                            _dark={{ color: 'whitesmoke' }}>
                                                             Add Task
-
                                                             <Icon as={AiOutlinePlus} />
                                                         </Text>
 

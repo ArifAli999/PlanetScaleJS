@@ -171,11 +171,13 @@ function DrawerExample({ open }) {
                     <Flex justifyContent='space-between' alignItems='center' p={6}>
 
                         <Menu isLazy>
-                            <MenuButton border='1px' borderColor={useColorModeValue('gray.400', 'gray.600')} p={1.5} borderRadius='sm'>{boards && boards.length > 0 ?
-                                boards.slice(0, 1).map((m) => (
-                                    <Text key={m.boardID} > {m.boardName} <ChevronDownIcon /></Text>
-                                ))
-                                : 'Dashboard'}</MenuButton>
+                            <MenuButton border='1px' borderColor='gray.400'
+                                _dark={{ borderColor: "gray.600" }}
+                                p={1.5} borderRadius='sm'>{boards && boards.length > 0 ?
+                                    boards.slice(0, 1).map((m) => (
+                                        <Text key={m.boardID} > {m.boardName} <ChevronDownIcon /></Text>
+                                    ))
+                                    : 'Dashboard'}</MenuButton>
                             <MenuList>
                                 {boards && boards.length > 0 ? (
 

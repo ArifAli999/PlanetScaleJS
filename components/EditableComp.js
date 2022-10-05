@@ -34,7 +34,7 @@ function EditableComp({ value }) {
                 py={2}
                 px={4}
                 _hover={{
-                    background: useColorModeValue("gray.200", "gray.600")
+                    background: 'gray.500'
                 }}
                 w='full'
                 border='1px solid '

@@ -18,17 +18,21 @@ export const PopComp = ({ text }) => {
             <PopoverTrigger style={{
                 cursor: 'pointer',
             }}>
-                <Box p={2.5} borderTop='1px' borderBottom='1px' borderColor={useColorModeValue('gray.300', 'gray.500')}
+                <Box p={2.5} borderTop='1px' borderBottom='1px'
+                    borderColor={"gray.300"}
+                    _dark={{ borderColor: "gray.500" }}
                     display='flex' alignItems='center' justifyContent='space-between' w='full' cursor={'pointer'}
                     _hover={{
                         cursor: "pointer",
-                        background: `${useColorModeValue('gray.300', 'blackAlpha.500')}`,
+
                         animationDuration: 20,
 
                     }}
                 >
                     <Text fontSize={'md'}>{text}</Text>
-                    <Icon as={AiOutlineArrowRight} w={6} h={6} color={useColorModeValue('purple.600', 'purple.500')} />
+                    <Icon as={AiOutlineArrowRight} w={6} h={6} color={'purple.600'}
+                        _dark={{ color: "purple.500" }}
+                    />
                 </Box>
 
             </PopoverTrigger>
